@@ -77,7 +77,7 @@ the offset for each section is obtained by computing:<br>
 **sda1 offset :( 512 x 2048 = 1048576)**<br>
 **sda2 offset :( 512 x 206848 = 105906176)**<br>
 
-the result is added to the section of the script manual_parameters<br>
+the result is added to the section of the script **manual_parameters**<br>
 Now the script itself can both save and restore data from the virtual machine image.<br>
 **Attention!!**<br>
 **Before using the script, I recommend that you first make a copy of the image file (example: /kvm/win7x64/disk_c.img)**<br>
