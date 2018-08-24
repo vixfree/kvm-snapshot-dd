@@ -34,12 +34,11 @@ Device        Boot  Start       End   Sectors  Size Id Type
 **sda2 offset:( 512 x 206848 = 105906176 )**<br> 
 
 результат вносим в раздел скрипта **manual_parameters**<br>
-теперь скрипт сможет сам как сохранять так и восстанавливать данные с образа вирткальной машины.<br>
+теперь скрипт сможет сам как сохранять так и восстанавливать данные с образа виртуальной машины.<br>
 **Внимание!!** До начала использования скрипта рекомендую предварительно сделать копию файла образа (пример : /kvm/win7x64/disk_c.img)<br>
 и только если все прошло успешно, копию можно удалить.<br>
-                                       
+Диалог скрипта поддерживает 2 языка: RU и EN<br>
 
-<br>
 <hr>
 **EN:** A script to extract a data image via the  **[ntfsclone](https://linux.die.net/man/8/ntfsclone)** utility from XEN \ KVM media<br>
 Parameters for using the script are specified in section **manual_parameters**<br>
