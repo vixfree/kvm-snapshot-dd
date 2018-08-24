@@ -27,7 +27,7 @@ Device        Boot  Start       End   Sectors  Size Id Type
 ```
 
 у нас на образе 2 раздела.<br>
-каждый раздел это: sda1 и sda2<br>
+каждый раздел это: **sda1** и **sda2**<br>
 смещение для каждого раздела получаем вычислением:<br> 
 
 **sda1 offset:( 512 х 2048 = 1048576 )**<br> 
@@ -71,7 +71,7 @@ Device        Boot  Start       End   Sectors  Size Id Type
 
 
 at us on an image of 2 sections.<br>
-each partition is: sda1 and sda2<br>
+each partition is: **sda1** and **sda2**<br>
 the offset for each section is obtained by computing:<br>
 
 **sda1 offset :( 512 x 2048 = 1048576)**<br>
