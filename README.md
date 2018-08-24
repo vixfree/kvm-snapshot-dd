@@ -34,9 +34,11 @@ Device        Boot  Start       End   Sectors  Size Id Type
 **sda2 offset:( 512 x 206848 = 105906176 )**<br> 
 
 результат вносим в раздел скрипта **manual_parameters**<br>
+теперь скрипт сможет сам как сохранять так и восстанавливать данные с образа виртуальной машины.<br>
+
 Пожалуйста обратите внимание, параметры скрипта это массивы, вносите изменения так же как в исходном коде,<br>
 скрипт всегда опрашивает значения как массив, независисмо одно значение или более.<br>
-теперь скрипт сможет сам как сохранять так и восстанавливать данные с образа виртуальной машины.<br>
+
 **Внимание!!**<br> 
 **До начала использования скрипта рекомендую предварительно сделать копию файла образа (пример : /kvm/win7x64/disk_c.img)**<br>
 и только если все прошло успешно, копию можно удалить.<br>
@@ -80,9 +82,11 @@ the offset for each section is obtained by computing:<br>
 **sda2 offset :( 512 x 206848 = 105906176)**<br>
 
 the result is added to the section of the script **manual_parameters**<br>
+Now the script itself can both save and restore data from the virtual machine image.<br>
+
 Please note, the script settings are arrays, make the changes as well as in the source code, <br>
 The script always interrogates values as an array, independently one value or more.<br>
-Now the script itself can both save and restore data from the virtual machine image.<br>
+
 **Attention!!**<br>
 **Before using the script, I recommend that you first make a copy of the image file (example: /kvm/win7x64/disk_c.img)**<br>
 and only if everything went well, a copy can be deleted.<br>
