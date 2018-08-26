@@ -1,4 +1,4 @@
-**RU:** Скрипт снятия образа данных через утилиту **[ntfsclone](https://linux.die.net/man/8/ntfsclone)** с носителей XEN\KVM с максимальным сжатием данных<br>
+**RU:** Скрипт снятия образа данных через утилиту **[ntfsclone](https://linux.die.net/man/8/ntfsclone)** с носителей XEN\KVM с максимальным сжатием данных (для HVM OS Windows)<br>
 Параметры использования скрипта задаются в секции **manual_parameters**<br>
 для скрипта необходим пакет **dialog**.
 
@@ -45,7 +45,7 @@ Device        Boot  Start       End   Sectors  Size Id Type
 Диалог скрипта поддерживает 2 языка: RU и EN<br>
 
 <hr>
-**EN:** A script to extract a data image via the  **[ntfsclone](https://linux.die.net/man/8/ntfsclone)** utility from XEN \ KVM with maximum data compression<br>
+**EN:** A script to extract a data image via the  **[ntfsclone](https://linux.die.net/man/8/ntfsclone)** utility from XEN \ KVM with maximum data compression (for HVM OS Windows)<br>
 Parameters for using the script are specified in section **manual_parameters**<br>
 for the script you need the package **dialog**.
 
