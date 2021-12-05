@@ -2,25 +2,21 @@
 # The script is designed to create or restore an image of a virtual machine kvm (c) 2018
 # author Koshuba V.O.
 # license: MIT
-# version: 4.0.0
+# version: 5.0.2
 ##
 
 #<manual_parameters>
-path_kvm=( "/kvm/win7x64" 
-           "/kvm/win2kx64" );					# path kvm machines
-path_bak=( "/arhive/backup/kvm/win7x64" 
-           "/arhive/backup/kvm/win2kx64" );			# path backup kvm machines
-img_dev=( "disk_c.img" 
-          "disk_c.img" );					# storage kvm
-img_part=( '"sda1" "sda2"' 
-           '"sda1"' );						# sections in media kvm
-img_offset=( '"1048576" "105906176"' 
-           '"32256"' );						# offset for switch section media kvm
+path_kvm=(	"/kvm/vm1"
+	        "/kvm/vm2" );			# path kvm machines
+path_bak=(	"/backup/kvm/vm1" 
+		"/backup/kvm/vm2"  );		# path backup kvm machines
+img_dev=(	"sda.img"
+		"sda.img" );			# storage kvm
 #</manual_parameters>
 
 #<script_value>
-version="4.0.0";
-owner="(c) script by Koshuba V.O. 2018";
+version="4.0.10";
+owner="(c) script by Koshuba V.O. 2021";
 msg_dat=( '"Script to save or restore the image KVM" "Скрипт сохранения или восстановления образа KVM"'
           '"MAIN MENU" "ГЛАВНОЕ МЕНЮ"'
           '"RESTORE KVM MACHINE" "ВОССТАНОВЛЕНИЕ ГОСТЕВОЙ МАШИНЫ KVM"'
@@ -38,7 +34,8 @@ msg_dat=( '"Script to save or restore the image KVM" "Скрипт сохран�
           '"Found the file kvmsnapshot.lock - work is stopped!" "Найден файл kvmsnapshot.lok - работа остановлена!"'
           '"Starting kvm-snapshot script." "Запуск скрипта kvm-snapshot."'
           '"Ending work kvm-snapshot script." "Окончание работы скрипта kvm-snapshot."'
-          '"Not found save images!" "Не найдены сохраненные образы!"' );
+          '"Not found save images!" "Не найдены сохраненные образы!"'
+	 );
 	  # msg[17]
 msg=();											# set current messages
 esc_title="";										# title escape menu
@@ -74,7 +71,7 @@ operation_exit=( "clear" "endproc" "exit" );
 
 
 #<tools_script>
-get_tools=( "ntfsclone" "pigz" "locale" "du" "ntfsfix" "gunzip" );           # tools for script
+get_tools=( "pigz" "locale" "du" "gunzip" "dd" );           # tools for script
 #</tools_script>
 
 
@@ -361,47 +358,28 @@ done
 function saveKvm() {
 local save_kvm="${path_kvm[$set_kvm]}";
 local save_bak="${path_bak[$set_kvm]}/$rdate";
-local save_img="${img_dev[$set_kvm]}";
-eval local save_dev="(" $(echo -e ${img_part[$set_kvm]}) ")";
-eval local save_offset="(" "$(echo -e ${img_offset[$set_kvm]})" ")";
+local save_img=$(echo "${img_dev[$set_kvm]}"|sed 's/\./ /g'|awk '{print$1}');
 local set_loop_main="$(losetup -f|grep -v loop-control|sed 's/\/\dev\///g')";
-losetup /dev/$set_loop_main $save_kvm/$save_img;
+losetup /dev/$set_loop_main $save_kvm/$save_img.img;
 
 if [[ ! -d $save_bak ]];
     then
     mkdir -p $save_bak;
 fi
 
-sfdisk -d /dev/$set_loop_main >$save_bak/info.txt;
-dd if=/dev/$set_loop_main of=$save_bak/winboot.img bs=512 count=1;
-
-for ((iskvm=0; iskvm != ${#save_dev[@]}; iskvm++))
- do
-    local set_loop_dev="$(losetup -f|grep -v loop-control|sed 's/\/\dev\///g')";
-    losetup -o ${save_offset[$iskvm]} /dev/$set_loop_dev /dev/$set_loop_main;
-    ntfsclone --save-image -o - /dev/$set_loop_dev| pigz -p2 -c9>$save_bak/${save_dev[$iskvm]}.img.gz;
-    losetup -d /dev/$set_loop_dev;
-done
+sfdisk -d /dev/$set_loop_main >$save_bak/info_sfdisk.txt;
+sfdisk -l /dev/$set_loop_main >$save_bak/info_disk.txt;
+dd if=/dev/$set_loop_main status=progress |pigz -p4 -M -c9>$save_bak/$save_img-dd.img.gz;
 losetup -d /dev/$set_loop_main;
 }
 
 function restoreKvm() {
 local rest_kvm="${path_kvm[$set_kvm]}";
 local rest_bak="${path_bak[$set_kvm]}/$set_img";
-local rest_img="${img_dev[$set_kvm]}";
-eval local rest_dev="(" $(echo -e ${img_part[$set_kvm]}) ")";
-eval local rest_offset="(" "$(echo -e ${img_offset[$set_kvm]})" ")";
+local rest_img=$(echo "${img_dev[$set_kvm]}"|sed 's/\./ /g'|awk '{print$1}');
 local set_loop_rmain="$(losetup -f|grep -v loop-control|sed 's/\/\dev\///g')";
-losetup /dev/$set_loop_rmain $rest_kvm/$rest_img;
-dd if=$rest_bak/winboot.img of=/dev/$set_loop_rmain bs=512 count=1;
-sleep 1
-for ((irkvm=0; irkvm != ${#rest_dev[@]}; irkvm++))
- do
-    local set_loop_rdev="$(losetup -f|grep -v loop-control|sed 's/\/\dev\///g')";
-    losetup -o ${rest_offset[$irkvm]} /dev/$set_loop_rdev /dev/$set_loop_rmain;
-    gunzip -c $rest_bak/${rest_dev[$irkvm]}.img.gz|ntfsclone --restore-image -O /dev/$set_loop_rdev -;
-    losetup -d /dev/$set_loop_rdev;
-done
+losetup /dev/$set_loop_rmain $rest_kvm/$rest_img.img;
+pigz -p4 -c -d -M $rest_bak/$rest_img-dd.img.gz|dd of=/dev/$set_loop_rmain status=progress;
 losetup -d /dev/$set_loop_rmain;
 }
 
