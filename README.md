@@ -24,7 +24,7 @@
 
 
 <hr>
-**EN:** A script to extract a data image via the  **[dd](https://linux.die.net/man/1/dd)** utility from XEN \ KVM <br>
+**EN:** This script to safe and extract a data image via the  **[dd](https://linux.die.net/man/1/dd)** utility from XEN \ KVM <br>
 - with maximum data compression<br>
 **(for HVM all OS)**<br>
 Parameters for using the script are specified in section **manual_parameters**<br>
