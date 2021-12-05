@@ -15,7 +15,7 @@ img_dev=(	"sda.img"
 #</manual_parameters>
 
 #<script_value>
-version="4.0.10";
+version="5.0.2";
 owner="(c) script by Koshuba V.O. 2021";
 msg_dat=( '"Script to save or restore the image KVM" "Скрипт сохранения или восстановления образа KVM"'
           '"MAIN MENU" "ГЛАВНОЕ МЕНЮ"'
