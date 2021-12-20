@@ -14,7 +14,8 @@
 Пожалуйста обратите внимание, параметры скрипта это массивы, вносите изменения так же как в исходном коде,<br>
 скрипт всегда опрашивает значения как массив, независимо одно значение или более.<br>
 
-**Внимание!!**<br> 
+**Внимание!!**<br>
+**перед запуском сохранения необходимо остановить виртуальную машину!**<br>
 **До начала использования скрипта рекомендую предварительно сделать копию файла образа (пример : /kvm/vm1/sda.img)**<br>
 и только если все прошло успешно, копию можно удалить.<br>
 Диалог скрипта поддерживает 2 языка: RU и EN<br>
@@ -37,6 +38,7 @@ Please note, the script settings are arrays, make the changes as well as in the 
 The script always interrogates values as an array, independently one value or more.<br>
 
 **Attention!!**<br>
+**Before start script stop vm!**<br>
 **Before using the script, I recommend that you first make a copy of the image file (example: /kvm/vm1/sda.img)**<br>
 and only if everything went well, a copy can be deleted.<br>
 The script dialog supports 2 languages: RU and EN<br>
